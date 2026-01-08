@@ -3,36 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026年 新年のご挨拶 | 園延昌志</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>2026年 年賀状</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            text-align: center;
+            background-color: #f0f4f8;
+            color: #004d40;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #006064;
+            margin-bottom: 30px;
+        }
+        /* カードの枠組み */
+        .card-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* 画像の最大幅 */
+            margin: 0 auto;
+            cursor: pointer; /* クリックできるよ、という指マーク */
+        }
+        
+        /* 画像の共通設定 */
+        .card-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: opacity 1.5s ease; /* 1.5秒かけてふわっと変わる */
+        }
+
+        /* 2枚の画像を重ねる魔法 */
+        .front-img {
+            position: relative;
+            z-index: 2; /* 手前に表示 */
+        }
+        .back-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; /* 奥に表示 */
+            opacity: 0; /* 最初は透明で見えない */
+        }
+
+        /* 切り替え時のクラス（JSで追加する） */
+        .active .front-img {
+            opacity: 0; /* 漢字が消える */
+        }
+        .active .back-img {
+            opacity: 1; /* 馬が現れる */
+            animation: shake 0.5s ease-in-out infinite; /* 震えるアニメーション */
+        }
+
+        /* 嘶くような震えアニメーション */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .instruction {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
 </head>
-<body style="background-color: #f0f0f0; text-align: center;">
+<body>
 
-    <header style="padding: 20px; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <div class="container">
-            <a href="index.html" class="btn">← ポートフォリオに戻る</a>
-        </div>
-    </header>
+    <h1>2026 New Year's Greeting</h1>
 
-    <section class="section">
-        <div class="container">
-            <h1 style="color: #006D77; margin-bottom: 30px;">2026 New Year's Greeting</h1>
-            
-            <div style="background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
-                <img src="nengajo.jpg" alt="2026年 年賀状" style="max-width: 100%; height: auto; max-height: 80vh; border-radius: 5px;">
-            </div>
+    <div class="card-container" id="nengajoCard" onclick="transformHorse()">
+        <img src="nengajo.jpg" alt="漢字の馬" class="front-img">
+        <img src="horse_real.jpg" alt="リアルな馬" class="back-img">
+    </div>
 
-            <p style="margin-top: 30px; font-size: 1.2rem;">
-                本年もどうぞよろしくお願い申し上げます。
-            </p>
-        </div>
-    </section>
+    <p class="instruction">👆 画像をタップすると、馬が目覚めます 🔊</p>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Masashi Sonobe. All Rights Reserved.</p>
-        </div>
-    </footer>
+    <audio id="horseSound" src="horse.mp3"></audio>
+
+    <script>
+        function transformHorse() {
+            var card = document.getElementById('nengajoCard');
+            var sound = document.getElementById('horseSound');
+
+            // クラス「active」をつけたり外したりする
+            if (card.classList.contains('active')) {
+                // 元に戻す場合
+                card.classList.remove('active');
+                sound.pause();
+                sound.currentTime = 0;
+            } else {
+                // 変身させる場合
+                card.classList.add('active');
+                sound.volume = 0.5; // 音量調整
+                sound.play().catch(function(error) {
+                    console.log("音声再生エラー: ブラウザの設定でブロックされました");
+                });
+                
+                // 3秒後に震えだけ止める（かっこよく静止）
+                setTimeout(function() {
+                    document.querySelector('.back-img').style.animation = 'none';
+                }, 3000);
+            }
+        }
+    </script>
 
 </body>
 </html>
