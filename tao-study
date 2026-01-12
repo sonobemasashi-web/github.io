@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taoの学習アドベンチャー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #f0f9ff;
+            touch-action: manipulation;
+            overflow-x: hidden;
+        }
+        .card {
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar {
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        #wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #ef4444;
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 20;
+        }
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            z-index: 15;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* 花火の火花スタイル */
+        .firework-particle {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            animation: firework-animation 1.5s ease-out forwards;
+        }
+
+        @keyframes firework-animation {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-md mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-3xl text-blue-600 mb-2">Taoの冒険ログ ⚔️</h1>
+            <p class="text-gray-500">今日もレベルアップしよう！</p>
+        </header>
+
+        <!-- Stats Card -->
+        <div class="card bg-white p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-lg text-gray-700">合計ポイント</span>
+                <span id="totalPoints" class="text-4xl text-orange-500">0</span>
+            </div>
+            <div class="mb-2 flex justify-between text-sm text-blue-500">
+                <span>ルーレットまであと...</span>
+                <span id="nextGoal">10 / 10</span>
+            </div>
+            <div class="w-full bg-blue-100 h-6 rounded-full overflow-hidden">
+                <div id="progressBar" class="progress-bar bg-blue-500 h-full w-0"></div>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="card bg-white p-6 mb-6">
+            <h2 class="text-xl mb-4 flex items-center">
+                <span class="mr-2">📝</span> 今日の成果を入力
+            </h2>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">ドリルをえらぶ</label>
+                    <select id="studyType" class="w-full p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-blue-400 outline-none">
+                        <option value="kanji">漢字ドリル ✍️</option>
+                        <option value="eiken">英検ドリル 🔤</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">やったページ数</label>
+                    <input type="number" id="pageCount" min="1" placeholder="例: 2" class="w-full p-3 bg-gray-50 border-2 border-gray-100 rounded-xl focus:border-blue-400 outline-none">
+                </div>
+                <button onclick="addAchievement()" class="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-lg transition-transform active:scale-95 shadow-lg">
+                    ポイントをゲット！
+                </button>
+            </div>
+        </div>
+
+        <!-- Roulette Section (Hidden by default) -->
+        <div id="rouletteSection" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+            <div class="bg-white w-full max-w-sm rounded-[40px] p-8 text-center relative">
+                <h2 class="text-2xl font-bold text-blue-600 mb-6">おめでとう！10ポイント達成！ 🎉</h2>
+                <div class="wheel-container mb-8">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel-center"></div>
+                    <div id="wheel"></div>
+                </div>
+                <button id="spinBtn" onclick="spin()" class="w-full py-4 bg-orange-500 text-white rounded-2xl text-xl font-bold shadow-lg hover:bg-orange-600 active:scale-95 transition-all">
+                    ルーレットを回す！
+                </button>
+                <div id="prizeResult" class="mt-6 text-2xl font-bold text-green-600 hidden whitespace-pre-line"></div>
+                <button id="closeRoulette" onclick="closeRoulette()" class="mt-4 text-gray-400 hidden">とじる</button>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="card bg-white p-6">
+            <h2 class="text-lg mb-4 text-gray-700">最近の記録</h2>
+            <div id="historyList" class="space-y-3">
+                <p class="text-gray-400 text-center py-4">まだ記録がないよ。がんばろう！</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full opacity-0 transition-opacity pointer-events-none z-[100]">
+        メッセージ
+    </div>
+
+    <script>
+        // State management
+        let totalPoints = parseFloat(localStorage.getItem('tao_total_points')) || 0;
+        let currentProgress = parseFloat(localStorage.getItem('tao_current_progress')) || 0;
+        let history = JSON.parse(localStorage.getItem('tao_history')) || [];
+
+        const prizes = [
+            { text: "お菓子\n300円分", color: "#FF6B6B" },
+            { text: "お小遣い\n1500円分", color: "#4DABF7" },
+            { text: "お小遣い\n1000円分", color: "#51CF66" },
+            { text: "好きな\nご飯", color: "#FCC419" },
+            { text: "好きな\n映画", color: "#FF922B" },
+            { text: "好きな\nイベント", color: "#BE4BDB" }
+        ];
+
+        function initWheel() {
+            const wheel = document.getElementById('wheel');
+            wheel.innerHTML = '';
+            const segmentAngle = 360 / prizes.length;
+            
+            prizes.forEach((prize, i) => {
+                const segment = document.createElement('div');
+                segment.style.position = 'absolute';
+                segment.style.width = '100%';
+                segment.style.height = '100%';
+                segment.style.backgroundColor = prize.color;
+                const startAngle = i * segmentAngle;
+                segment.style.transform = `rotate(${startAngle}deg)`;
+                segment.style.clipPath = `polygon(50% 50%, 50% 0%, ${50 + 50 * Math.tan(segmentAngle * Math.PI / 180)}% 0%)`;
+                
+                const label = document.createElement('div');
+                label.innerText = prize.text;
+                label.style.position = 'absolute';
+                label.style.left = '50%';
+                label.style.top = '12%';
+                label.style.width = '80px';
+                label.style.marginLeft = '-40px';
+                label.style.textAlign = 'center';
+                label.style.color = 'white';
+                label.style.fontWeight = 'bold';
+                label.style.fontSize = '14px';
+                label.style.lineHeight = '1.2';
+                label.style.zIndex = '5';
+                label.style.transformOrigin = 'center 260%'; 
+                label.style.transform = `rotate(${segmentAngle / 2}deg)`;
+
+                segment.appendChild(label);
+                wheel.appendChild(segment);
+            });
+        }
+
+        function updateUI() {
+            document.getElementById('totalPoints').innerText = totalPoints.toFixed(1);
+            document.getElementById('nextGoal').innerText = `${currentProgress.toFixed(1)} / 10`;
+            const percent = (currentProgress / 10) * 100;
+            document.getElementById('progressBar').style.width = `${Math.min(percent, 100)}%`;
+
+            const historyList = document.getElementById('historyList');
+            if (history.length === 0) {
+                historyList.innerHTML = '<p class="text-gray-400 text-center py-4">まだ記録がないよ。がんばろう！</p>';
+            } else {
+                historyList.innerHTML = history.slice(-5).reverse().map(item => `
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-lg border-l-4 border-blue-400">
+                        <div>
+                            <span class="font-bold">${item.type === 'kanji' ? '漢字' : '英検'}</span>
+                            <span class="text-sm text-gray-500 ml-2">${item.pages}ページ</span>
+                        </div>
+                        <span class="text-blue-600">+${item.points}pt</span>
+                    </div>
+                `).join('');
+            }
+
+            localStorage.setItem('tao_total_points', totalPoints);
+            localStorage.setItem('tao_current_progress', currentProgress);
+            localStorage.setItem('tao_history', JSON.stringify(history));
+
+            if (currentProgress >= 10) {
+                setTimeout(() => {
+                    document.getElementById('rouletteSection').classList.remove('hidden');
+                }, 600);
+            }
+        }
+
+        function addAchievement() {
+            const type = document.getElementById('studyType').value;
+            const pages = parseInt(document.getElementById('pageCount').value);
+            if (!pages || pages <= 0) {
+                showToast("ページ数を入力してね！");
+                return;
+            }
+            const earnedPoints = pages / 2;
+            totalPoints += earnedPoints;
+            currentProgress += earnedPoints;
+            history.push({ type, pages, points: earnedPoints, date: new Date().toISOString() });
+            document.getElementById('pageCount').value = "";
+            showToast(`${earnedPoints} ポイント ゲット！ ✨`);
+            updateUI();
+        }
+
+        let isSpinning = false;
+        function spin() {
+            if (isSpinning) return;
+            isSpinning = true;
+            
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spinBtn');
+            const prizeResult = document.getElementById('prizeResult');
+            const closeBtn = document.getElementById('closeRoulette');
+
+            const randomRotation = Math.floor(Math.random() * 360);
+            const totalRotation = 1800 + randomRotation; 
+            
+            wheel.style.transition = 'transform 4s cubic-bezier(0.15, 0, 0.15, 1)';
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            spinBtn.disabled = true;
+            spinBtn.classList.add('opacity-50');
+
+            setTimeout(() => {
+                const finalAngle = (360 - (totalRotation % 360)) % 360;
+                const segmentAngle = 360 / prizes.length;
+                const winningIndex = Math.floor(finalAngle / segmentAngle);
+                
+                const resultText = prizes[winningIndex].text.replace('\n', '');
+                prizeResult.innerText = `やったね！\n「${resultText}」だ！ 🎁`;
+                prizeResult.classList.remove('hidden');
+                closeBtn.classList.remove('hidden');
+                
+                // 花火演出を実行
+                launchMultipleFireworks();
+                
+                currentProgress -= 10;
+                updateUI();
+            }, 4100);
+        }
+
+        function closeRoulette() {
+            document.getElementById('rouletteSection').classList.add('hidden');
+            const wheel = document.getElementById('wheel');
+            wheel.style.transition = 'none';
+            wheel.style.transform = 'rotate(0deg)';
+            document.getElementById('prizeResult').classList.add('hidden');
+            document.getElementById('closeRoulette').classList.add('hidden');
+            document.getElementById('spinBtn').disabled = false;
+            document.getElementById('spinBtn').classList.remove('opacity-50');
+            isSpinning = false;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }
+
+        // --- 花火演出ロジック ---
+        function launchMultipleFireworks() {
+            // 連続して打ち上げる
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const x = 20 + Math.random() * 60; // 横幅 20%-80%
+                    const y = 20 + Math.random() * 50; // 高さ 20%-70%
+                    createFirework(x, y);
+                }, i * 300);
+            }
+        }
+
+        function createFirework(x, y) {
+            const colors = ['#FF6B6B', '#4DABF7', '#51CF66', '#FCC419', '#FF922B', '#BE4BDB', '#FFFFFF'];
+            const particleCount = 20;
+            const baseColor = colors[Math.floor(Math.random() * colors.length)];
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                
+                // 配置
+                particle.style.left = x + 'vw';
+                particle.style.top = y + 'vh';
+                particle.style.backgroundColor = baseColor;
+                
+                // 飛び散る方向をランダムに決定
+                const angle = (i / particleCount) * Math.PI * 2 + (Math.random() * 0.5);
+                const distance = 80 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance + 'px';
+                const ty = Math.sin(angle) * distance + 'px';
+                
+                particle.style.setProperty('--tx', tx);
+                particle.style.setProperty('--ty', ty);
+
+                document.body.appendChild(particle);
+
+                particle.addEventListener('animationend', () => {
+                    particle.remove();
+                });
+            }
+        }
+
+        window.onload = () => {
+            initWheel();
+            updateUI();
+        };
+    </script>
+</body>
+</html>
