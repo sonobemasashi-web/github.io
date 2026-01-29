@@ -265,3 +265,39 @@ footer {
         font-weight: bold;
     }
 }
+/* VRoid Section */
+.vroid-image {
+  max-width: 300px;
+  border-radius: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.vroid-image.speaking {
+  animation: speak 0.1s ease-in-out infinite;
+}
+
+@keyframes speak {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.speak-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 16px;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.speak-button:hover {
+  transform: scale(1.05);
+}
