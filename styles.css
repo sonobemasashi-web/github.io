@@ -265,39 +265,31 @@ footer {
         font-weight: bold;
     }
 }
-/* VRoid Section */
-.vroid-image {
-  max-width: 300px;
-  border-radius: 10px;
-  animation: float 3s ease-in-out infinite;
+/* メニューを横並びにする */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/* 画像を4つ（2×2）に並べる */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+.grid-container img {
+    width: 100%;
+    height: auto;
 }
 
-.vroid-image.speaking {
-  animation: speak 0.1s ease-in-out infinite;
+/* 動画を横に4つ並べる */
+.video-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* スマホで見やすいように横スクロール可に */
 }
-
-@keyframes speak {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
-
-.speak-button {
-  margin-top: 20px;
-  padding: 12px 24px;
-  font-size: 16px;
-  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.speak-button:hover {
-  transform: scale(1.05);
+.video-container iframe {
+    width: 25%; /* 4つ並ぶように調整 */
+    aspect-ratio: 16 / 9;
 }
