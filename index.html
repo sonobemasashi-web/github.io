@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歯科医師 園延昌志 | Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="hero-section">
+        <div class="container">
+            <h1>園延 昌志</h1>
+            <p class="subtitle">Dentist / Digital Hollywood University Graduate Student</p>
+            <p class="hero-text">テクノロジーと心理学で、歯科医療の新しい「ウェルビーイング」を創造する。</p>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+      <div class="container" style="text-align: center;"> <h2 class="section-title">About Me</h2>
+          
+          <img src="profile.jpg" alt="園延昌志" class="profile-photo">
+          <p>歯科医師としての臨床経験に加え、現在はデジタルハリウッド大学院にて先端芸術とテクノロジーを研究。AIを活用した診療マネジメントや、組織心理学を用いたチームビルディングに取り組み、医療現場のDXとウェルビーイング向上を目指しています。</p>
+      </div>
+  </section>
+  <!-- VRoid Section -->
+<section id="vroid" class="section">
+  <div class="container" style="text-align: center;">
+    <h2 class="section-title">VRoid</h2>
+    <div class="vroid-container">
+      <img src="dr-lian.jpg" alt="Dr.Lian" class="vroid-image" id="drLian">
+    </div>
+    <button onclick="speakDrLian()" class="speak-button">🎤 Dr.Lianに喋らせる</button>
+    <audio id="drLianVoice" src="dr-lian-voice.mp3"></audio>
+  </div>
+</section>
+
+<script>
+function speakDrLian() {
+  const audio = document.getElementById('drLianVoice');
+  const char = document.getElementById('drLian');
+  audio.play();
+  char.classList.add('speaking');
+  audio.onended = () => char.classList.remove('speaking');
+}
+</script>
+<section id="timeline" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">History</h2>
+            
+            <div class="timeline-headers">
+                <div class="th-left">School / Academic</div>
+                <div class="th-center"></div>
+                <div class="th-right">Work / Project</div>
+            </div>
+
+            <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-row">
+                    <div class="tl-content tl-left">
+                        <div class="tl-card">
+                            <h3>Next Challenge</h3>
+                            <p>セカンドキャリアへの準備期間</p>
+                        </div>
+                    </div>
+                    <div class="tl-year">2026</div>
+                    <div class="tl-content tl-right">
+                        <div class="tl-card">
+                            <h3>開業20周年・世界一周へ</h3>
+                            <p>医院開業20周年の節目。3ヶ月間のピースボート世界一周旅行を計画中。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-row">
+                    <div class="tl-content tl-left">
+                        <div class="tl-card">
+                            <h3>デジタルハリウッド大学院</h3>
+                            <p>先端芸術とテクノロジーを研究中。AIを用いた歯科診療マネジメントシステムの開発。</p>
+                        </div>
+                    </div>
+                    <div class="tl-year">2025</div>
+                    <div class="tl-content tl-right">
+                        <div class="tl-card">
+                            <h3>歯科医院経営 / 組織開発</h3>
+                            <p>院長として診療を行う傍ら、心理学に基づいたチームビルディングとDXを推進。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-row">
+                    <div class="tl-content tl-left">
+                        <div class="tl-card">
+                            <h3>MBA（経営学修士）取得</h3>
+                            <p>医療経営の質向上のため、ビジネススクールにて組織論とマーケティングを習得。</p>
+                        </div>
+                    </div>
+                    <div class="tl-year">20xx</div>
+                    <div class="tl-content tl-right">
+                        <div class="tl-card">
+                            <h3>医療法人設立</h3>
+                            <p>地域医療への貢献を目指し、組織体制を強化。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-row">
+                    <div class="tl-content tl-left">
+                        <div class="tl-card">
+                            <h3>歯科大学 卒業</h3>
+                            <p>歯科医師免許取得。</p>
+                        </div>
+                    </div>
+                    <div class="tl-year">2006</div>
+                    <div class="tl-content tl-right">
+                        <div class="tl-card">
+                            <h3>歯科医院 開業</h3>
+                            <p>自身のクリニックを開設。予防歯科を中心とした診療をスタート。</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="skills" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Focus & Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Dental Practice</h3>
+                    <p>一般歯科臨床 / 医院経営 / チームマネジメント</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Technology & AI</h3>
+                    <p>AI導入支援 / 業務効率化 / 生成AI活用 (Gemini, ChatGPT)</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Well-being</h3>
+                    <p>組織心理学 / メンタルヘルス / チームビルディング</p>
+                </div>
+            </div>
+        </div>
+    </section>
+<section id="greeting" class="section" style="text-align: center; background-color: #e6fffa;">
+        <div class="container">
+            <h2 class="section-title">New Year's Greeting</h2>
+            <p style="margin-bottom: 20px;">2026年のご挨拶を掲載いたしました。</p>
+            <a href="nengajo.html" class="btn">年賀状ページを見る</a>
+        </div>
+    </section>
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <p>講演依頼、診療に関するご相談など、お気軽にお問い合わせください。</p>
+            <a href="mailto:your-email@example.com" class="btn">メールでお問い合わせ</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Masashi Sonobe. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
