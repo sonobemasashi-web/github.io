@@ -266,30 +266,76 @@ footer {
     }
 }
 /* メニューを横並びにする */
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 20px;
+/* =========================================
+   ナビゲーションメニューの決定版デザイン
+   ========================================= */
+
+/* メニュー全体のレイアウト設定 */
+.main-nav {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
-/* 画像を4つ（2×2）に並べる */
+/* リスト（点）を消して中央に横並びにする */
+.main-nav ul {
+    display: flex;
+    justify-content: center; /* 画面中央に寄せる */
+    list-style: none;        /* 黒い「・」を完全に消す */
+    padding: 0;
+    margin: 0;
+    gap: 50px;               /* メニュー間の余白を広めに取る */
+}
+
+/* リンク（文字）のデザイン */
+.main-nav a {
+    text-decoration: none;
+    color: white;            /* ヒーローセクションの背景に映える白 */
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 8px 0;
+    display: inline-block;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent; /* 最初は下線を透明にしておく */
+}
+
+/* マウスを乗せた時の動き */
+.main-nav a:hover {
+    opacity: 0.8;
+    border-bottom: 2px solid white; /* 白い下線を出して清潔感を演出 */
+}
+
+/* =========================================
+   コンテンツ（画像・動画）のレイアウト
+   ========================================= */
+
+/* 審美歯科症例集：2列×2行のグリッド */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-.grid-container img {
-    width: 100%;
-    height: auto;
+    grid-template-columns: repeat(2, 1fr); /* 2列 */
+    gap: 20px;
+    padding: 20px 0;
 }
 
-/* 動画を横に4つ並べる */
+.grid-container img {
+    width: 100%;
+    height: 300px;         /* 高さを統一すると綺麗に見えます */
+    object-fit: cover;     /* 写真が歪まないように調整 */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ポートフォリオ：横並び動画 */
 .video-container {
     display: flex;
-    gap: 10px;
-    overflow-x: auto; /* スマホで見やすいように横スクロール可に */
+    gap: 15px;
+    overflow-x: auto;      /* スマホで見やすいように横スクロール可能に */
+    padding-bottom: 20px;
 }
+
 .video-container iframe {
-    width: 25%; /* 4つ並ぶように調整 */
+    width: 250px;          /* 横幅を固定して並べる */
     aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: 8px;
 }
