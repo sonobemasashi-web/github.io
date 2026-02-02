@@ -1,7 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>園延 昌志 | Dentist & Innovator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
     <header class="hero-section">
+        <div class="hero-bg"></div>
         <nav class="main-nav">
             <div class="container">
                 <ul>
@@ -11,35 +21,35 @@
             </div>
         </nav>
 
-        <div class="container">
-            <h1>園延 昌志</h1>
-            <p class="subtitle">Dentist / Digital Hollywood University Graduate Student</p>
-            <p class="hero-text">テクノロジーと心理学で、歯科医療の新しい「ウェルビーイング」を創造する。</p>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span class="char">園</span><span class="char">延</span>
+                <span class="char space"></span>
+                <span class="char">昌</span><span class="char">志</span>
+            </h1>
+            <p class="subtitle animate-fade-up">Dentist / Digital Hollywood University Graduate Student</p>
+            <p class="hero-text animate-fade-up delay-1">テクノロジーと心理学で、歯科医療の新しい「ウェルビーイング」を創造する。</p>
+            <div class="scroll-indicator">
+                <span></span>
+            </div>
         </div>
     </header>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container">
-        <h1>園延 昌志</h1>
-        <p class="subtitle">Dentist / Digital Hollywood University Graduate Student</p>
-        <p class="hero-text">テクノロジーと心理学で、歯科医療の新しい「ウェルビーイング」を創造する。</p>
-    </div>
-</header>
 
     <section id="about" class="section">
-      <div class="container" style="text-align: center;"> <h2 class="section-title">About Me</h2>
-          
-          <img src="profile.jpg" alt="園延昌志" class="profile-photo">
-          <p>歯科医師としての臨床経験に加え、現在はデジタルハリウッド大学院にて先端芸術とテクノロジーを研究。AIを活用した診療マネジメントや、組織心理学を用いたチームビルディングに取り組み、医療現場のDXとウェルビーイング向上を目指しています。</p>
-      </div>
-  </section>
-<section id="timeline" class="section bg-light">
         <div class="container">
-            <h2 class="section-title">History</h2>
-            
-            <div class="timeline-headers">
+            <h2 class="section-title reveal">About Me</h2>
+            <div class="about-content reveal">
+                <img src="profile.jpg" alt="園延昌志" class="profile-photo float-animation">
+                <p>歯科医師としての臨床経験に加え、現在はデジタルハリウッド大学院にて先端芸術とテクノロジーを研究。AIを活用した診療マネジメントや、組織心理学を用いたチームビルディングに取り組み、医療現場のDXとウェルビーイング向上を目指しています。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section bg-gradient">
+        <div class="container">
+            <h2 class="section-title reveal">History</h2>
+
+            <div class="timeline-headers reveal">
                 <div class="th-left">School / Academic</div>
                 <div class="th-center"></div>
                 <div class="th-right">Work / Project</div>
@@ -48,14 +58,14 @@
             <div class="timeline-wrapper">
                 <div class="timeline-line"></div>
 
-                <div class="timeline-row">
+                <div class="timeline-row reveal-left">
                     <div class="tl-content tl-left">
                         <div class="tl-card">
                             <h3>Next Challenge</h3>
                             <p>セカンドキャリアへの準備期間</p>
                         </div>
                     </div>
-                    <div class="tl-year">2026</div>
+                    <div class="tl-year pulse">2026</div>
                     <div class="tl-content tl-right">
                         <div class="tl-card">
                             <h3>開業20周年・世界一周へ</h3>
@@ -64,7 +74,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-row">
+                <div class="timeline-row reveal-right">
                     <div class="tl-content tl-left">
                         <div class="tl-card">
                             <h3>デジタルハリウッド大学院</h3>
@@ -80,7 +90,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-row">
+                <div class="timeline-row reveal-left">
                     <div class="tl-content tl-left">
                         <div class="tl-card">
                             <h3>MBA（経営学修士）取得</h3>
@@ -96,7 +106,7 @@
                     </div>
                 </div>
 
-                <div class="timeline-row">
+                <div class="timeline-row reveal-right">
                     <div class="tl-content tl-left">
                         <div class="tl-card">
                             <h3>歯科大学 卒業</h3>
@@ -111,44 +121,46 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-
-
-    <section id="skills" class="section bg-light">
+    <section id="skills" class="section">
         <div class="container">
-            <h2 class="section-title">Focus & Skills</h2>
+            <h2 class="section-title reveal">Focus & Skills</h2>
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-card reveal scale-in" style="--delay: 0">
+                    <div class="skill-icon">🦷</div>
                     <h3>Dental Practice</h3>
                     <p>一般歯科臨床 / 医院経営 / チームマネジメント</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card reveal scale-in" style="--delay: 1">
+                    <div class="skill-icon">🤖</div>
                     <h3>Technology & AI</h3>
                     <p>AI導入支援 / 業務効率化 / 生成AI活用 (Gemini, ChatGPT)</p>
                 </div>
-                <div class="skill-card">
+                <div class="skill-card reveal scale-in" style="--delay: 2">
+                    <div class="skill-icon">✨</div>
                     <h3>Well-being</h3>
                     <p>組織心理学 / メンタルヘルス / チームビルディング</p>
                 </div>
             </div>
         </div>
     </section>
-<section id="greeting" class="section" style="text-align: center; background-color: #e6fffa;">
+
+    <section id="greeting" class="section bg-accent">
         <div class="container">
-            <h2 class="section-title">New Year's Greeting</h2>
-            <p style="margin-bottom: 20px;">2026年のご挨拶を掲載いたしました。</p>
-            <a href="nengajo.html" class="btn">年賀状ページを見る</a>
+            <h2 class="section-title reveal">New Year's Greeting</h2>
+            <p class="reveal">2026年のご挨拶を掲載いたしました。</p>
+            <a href="nengajo.html" class="btn btn-glow reveal">年賀状ページを見る</a>
         </div>
     </section>
+
     <section id="contact" class="section">
         <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <p>講演依頼、診療に関するご相談など、お気軽にお問い合わせください。</p>
-            <a href="mailto:your-email@example.com" class="btn">メールでお問い合わせ</a>
+            <h2 class="section-title reveal">Contact</h2>
+            <p class="reveal">講演依頼、診療に関するご相談など、お気軽にお問い合わせください。</p>
+            <a href="mailto:your-email@example.com" class="btn btn-outline reveal">メールでお問い合わせ</a>
         </div>
     </section>
 
@@ -157,5 +169,31 @@
             <p>&copy; 2025 Masashi Sonobe. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // スクロールアニメーション
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ヒーローの文字アニメーション
+        document.querySelectorAll('.char').forEach((char, i) => {
+            char.style.animationDelay = `${i * 0.1}s`;
+        });
+    </script>
 </body>
 </html>
