@@ -25,27 +25,6 @@
           <p>歯科医師としての臨床経験に加え、現在はデジタルハリウッド大学院にて先端芸術とテクノロジーを研究。AIを活用した診療マネジメントや、組織心理学を用いたチームビルディングに取り組み、医療現場のDXとウェルビーイング向上を目指しています。</p>
       </div>
   </section>
-  <!-- VRoid Section -->
-<section id="vroid" class="section">
-  <div class="container" style="text-align: center;">
-    <h2 class="section-title">VRoid</h2>
-    <div class="vroid-container">
-      <img src="dr-lian.jpg" alt="Dr.Lian" class="vroid-image" id="drLian">
-    </div>
-    <button onclick="speakDrLian()" class="speak-button">🎤 Dr.Lianに喋らせる</button>
-    <audio id="drLianVoice" src="dr-lian-voice.mp3"></audio>
-  </div>
-</section>
-
-<script>
-function speakDrLian() {
-  const audio = document.getElementById('drLianVoice');
-  const char = document.getElementById('drLian');
-  audio.play();
-  char.classList.add('speaking');
-  audio.onended = () => char.classList.remove('speaking');
-}
-</script>
 <section id="timeline" class="section bg-light">
         <div class="container">
             <h2 class="section-title">History</h2>
